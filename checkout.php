@@ -54,10 +54,10 @@ if (isset($_POST['place_order'])) {
                 $s_products->execute([$f_cart['product_id']]);
                 $f_products = $s_products->fetch(PDO::FETCH_ASSOC);
 
-                $seller_id = $f_product['seller_id'];
+                $seller_id = $f_products['seller_id'];
 
-                $insert_order = $conn->prepare("INSERT INTO `orders`(id, user_id, name, number, email, address, address_type, method, product_id, price, qty) VALUES(?,?,?,?,?,?,?,?,?,?,?)");
-                $insert_order->execute([$id, $user_id, $name, $number, $email, $address, $address_type, $method, $f_cart['product_id'], $f_cart['price'], $f_cart['qty']]);
+                $insert_order = $conn->prepare("INSERT INTO `orders`(id, user_id, seller_id, name, number, email, address, address_type, method, product_id, price, qty) VALUES(?,?,?,?,?,?,?,?,?,?,?,?)");
+                $insert_order->execute([$id, $user_id, $seller_id, $name, $number, $email, $address, $address_type, $method, $f_cart['product_id'], $f_cart['price'], $f_cart['qty']]);
                 header("location:order.php");
             }
             if ($insert_order) {
